@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Show,
   SimpleShowLayout,
@@ -6,7 +7,12 @@ import {
   BooleanField,
   TextField,
   DateField,
+  ReferenceManyField,
+  Datagrid,
+  ReferenceField,
 } from "react-admin";
+
+import { PROJECT_TITLE_FIELD } from "./ProjectTitle";
 
 export const ProjectShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -22,10 +28,6 @@ export const ProjectShow = (props: ShowProps): React.ReactElement => {
         <TextField label="clientName" source="clientName" />
         <TextField label="completionDate" source="completionDate" />
         <DateField source="createdAt" label="Created At" />
-        <TextField
-          label="electricityBillDetails"
-          source="electricityBillDetails"
-        />
         <BooleanField
           label="greenMeterInstalled"
           source="greenMeterInstalled"
@@ -65,6 +67,26 @@ export const ProjectShow = (props: ShowProps): React.ReactElement => {
           label="wifiDongleSerialNumber"
           source="wifiDongleSerialNumber"
         />
+        <ReferenceManyField reference="Bill" target="ProjectId" label="bills">
+          <Datagrid rowClick="show">
+            <TextField label="amount" source="amount" />
+            <DateField source="createdAt" label="Created At" />
+            <TextField label="exportBill" source="exportBill" />
+            <TextField label="ID" source="id" />
+            <TextField label="importBill" source="importBill" />
+            <TextField label="month" source="month" />
+            <TextField label="produce" source="produce" />
+            <ReferenceField
+              label="project"
+              source="project.id"
+              reference="Project"
+            >
+              <TextField source={PROJECT_TITLE_FIELD} />
+            </ReferenceField>
+            <TextField label="referenceNumber" source="referenceNumber" />
+            <DateField source="updatedAt" label="Updated At" />
+          </Datagrid>
+        </ReferenceManyField>
       </SimpleShowLayout>
     </Show>
   );

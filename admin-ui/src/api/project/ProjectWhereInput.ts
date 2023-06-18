@@ -1,20 +1,21 @@
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { BillListRelationFilter } from "../bill/BillListRelationFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
-import { JsonFilter } from "../../util/JsonFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { JsonFilter } from "../../util/JsonFilter";
 
 export type ProjectWhereInput = {
   appInstalled?: BooleanNullableFilter;
   appName?: StringNullableFilter;
   appPassword?: StringNullableFilter;
   appUsername?: StringNullableFilter;
+  bills?: BillListRelationFilter;
   clientAddress?: StringNullableFilter;
   clientCnic?: StringNullableFilter;
   clientContactNumber?: StringNullableFilter;
   clientName?: StringNullableFilter;
   completionDate?: DateTimeNullableFilter;
-  electricityBillDetails?: JsonFilter;
   greenMeterInstalled?: BooleanNullableFilter;
   id?: StringFilter;
   installationTeamContactNumber?: StringNullableFilter;

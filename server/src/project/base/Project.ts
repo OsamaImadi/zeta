@@ -11,7 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsOptional, IsString, IsDate } from "class-validator";
+import {
+  IsBoolean,
+  IsOptional,
+  IsString,
+  ValidateNested,
+  IsDate,
+} from "class-validator";
+import { Bill } from "../../bill/base/Bill";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
@@ -62,6 +69,15 @@ class Project {
     nullable: true,
   })
   appUsername!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Bill],
+  })
+  @ValidateNested()
+  @Type(() => Bill)
+  @IsOptional()
+  bills?: Array<Bill>;
 
   @ApiProperty({
     required: false,
@@ -125,16 +141,6 @@ class Project {
   @Type(() => Date)
   @Field(() => Date)
   createdAt!: Date;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsJSONValue()
-  @IsOptional()
-  @Field(() => GraphQLJSON, {
-    nullable: true,
-  })
-  electricityBillDetails!: JsonValue;
 
   @ApiProperty({
     required: false,

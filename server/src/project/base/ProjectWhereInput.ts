@@ -13,11 +13,12 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { BillListRelationFilter } from "../../bill/base/BillListRelationFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
-import { JsonFilter } from "../../util/JsonFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { JsonFilter } from "../../util/JsonFilter";
 
 @InputType()
 class ProjectWhereInput {
@@ -64,6 +65,18 @@ class ProjectWhereInput {
     nullable: true,
   })
   appUsername?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => BillListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => BillListRelationFilter)
+  @IsOptional()
+  @Field(() => BillListRelationFilter, {
+    nullable: true,
+  })
+  bills?: BillListRelationFilter;
 
   @ApiProperty({
     required: false,
@@ -119,17 +132,6 @@ class ProjectWhereInput {
     nullable: true,
   })
   completionDate?: DateTimeNullableFilter;
-
-  @ApiProperty({
-    required: false,
-    type: JsonFilter,
-  })
-  @Type(() => JsonFilter)
-  @IsOptional()
-  @Field(() => JsonFilter, {
-    nullable: true,
-  })
-  electricityBillDetails?: JsonFilter;
 
   @ApiProperty({
     required: false,

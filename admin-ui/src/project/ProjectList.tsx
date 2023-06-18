@@ -29,10 +29,6 @@ export const ProjectList = (props: ListProps): React.ReactElement => {
         <TextField label="clientName" source="clientName" />
         <TextField label="completionDate" source="completionDate" />
         <DateField source="createdAt" label="Created At" />
-        <TextField
-          label="electricityBillDetails"
-          source="electricityBillDetails"
-        />
         <BooleanField
           label="greenMeterInstalled"
           source="greenMeterInstalled"

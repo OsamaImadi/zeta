@@ -26,6 +26,8 @@ import { ProjectCountArgs } from "./ProjectCountArgs";
 import { ProjectFindManyArgs } from "./ProjectFindManyArgs";
 import { ProjectFindUniqueArgs } from "./ProjectFindUniqueArgs";
 import { Project } from "./Project";
+import { BillFindManyArgs } from "../../bill/base/BillFindManyArgs";
+import { Bill } from "../../bill/base/Bill";
 import { ProjectService } from "../project.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Project)
@@ -140,5 +142,25 @@ export class ProjectResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Bill], { name: "bills" })
+  @nestAccessControl.UseRoles({
+    resource: "Bill",
+    action: "read",
+    possession: "any",
+  })
+  async resolveFieldBills(
+    @graphql.Parent() parent: Project,
+    @graphql.Args() args: BillFindManyArgs
+  ): Promise<Bill[]> {
+    const results = await this.service.findBills(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 }
