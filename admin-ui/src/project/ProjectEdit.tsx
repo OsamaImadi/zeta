@@ -1,12 +1,17 @@
 import * as React from "react";
+
 import {
   Edit,
   SimpleForm,
   EditProps,
   BooleanInput,
   TextInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
   DateInput,
 } from "react-admin";
+
+import { BillTitle } from "../bill/BillTitle";
 
 export const ProjectEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -16,12 +21,19 @@ export const ProjectEdit = (props: EditProps): React.ReactElement => {
         <TextInput label="appName" source="appName" />
         <TextInput label="appPassword" source="appPassword" />
         <TextInput label="appUsername" source="appUsername" />
+        <ReferenceArrayInput
+          source="bills"
+          reference="Bill"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={BillTitle} />
+        </ReferenceArrayInput>
         <TextInput label="clientAddress" source="clientAddress" />
         <TextInput label="clientCNIC" source="clientCnic" />
         <TextInput label="clientContactNumber" source="clientContactNumber" />
         <TextInput label="clientName" source="clientName" />
         <DateInput label="completionDate" source="completionDate" />
-        <div />
         <BooleanInput
           label="greenMeterInstalled"
           source="greenMeterInstalled"

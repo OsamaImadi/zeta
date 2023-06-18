@@ -1,3 +1,4 @@
+import { BillUpdateManyWithoutProjectsInput } from "./BillUpdateManyWithoutProjectsInput";
 import { InputJsonValue } from "../../types";
 
 export type ProjectUpdateInput = {
@@ -5,12 +6,12 @@ export type ProjectUpdateInput = {
   appName?: string | null;
   appPassword?: string | null;
   appUsername?: string | null;
+  bills?: BillUpdateManyWithoutProjectsInput;
   clientAddress?: string | null;
   clientCnic?: string | null;
   clientContactNumber?: string | null;
   clientName?: string | null;
   completionDate?: Date | null;
-  electricityBillDetails?: InputJsonValue;
   greenMeterInstalled?: boolean | null;
   installationTeamContactNumber?: string | null;
   installationTeamName?: string | null;

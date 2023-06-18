@@ -23,13 +23,13 @@ model Project {
   appName                         String?
   appPassword                     String?
   appUsername                     String?
+  bills                           Bill[]
   clientAddress                   String?
   clientCnic                      String?
   clientContactNumber             String?
   clientName                      String?
   completionDate                  DateTime?
   createdAt                       DateTime  @default(now())
-  electricityBillDetails          Json?
   greenMeterInstalled             Boolean?
   id                              String    @id @default(cuid())
   installationTeamContactNumber   String?
@@ -51,4 +51,18 @@ model Project {
   totalQuotationAgreed            String?
   updatedAt                       DateTime  @updatedAt
   wifiDongleSerialNumber          String?
+}
+
+model Bill {
+  amount          String?
+  createdAt       DateTime @default(now())
+  exportBill      String?
+  id              String   @id @default(cuid())
+  importBill      String?
+  month           String?
+  produce         String?
+  project         Project? @relation(fields: [projectId], references: [id])
+  projectId       String?
+  referenceNumber String?
+  updatedAt       DateTime @updatedAt
 }

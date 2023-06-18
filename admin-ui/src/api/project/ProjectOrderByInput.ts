@@ -11,7 +11,6 @@ export type ProjectOrderByInput = {
   clientName?: SortOrder;
   completionDate?: SortOrder;
   createdAt?: SortOrder;
-  electricityBillDetails?: SortOrder;
   greenMeterInstalled?: SortOrder;
   id?: SortOrder;
   installationTeamContactNumber?: SortOrder;

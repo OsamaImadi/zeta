@@ -27,6 +27,9 @@ import { ProjectWhereUniqueInput } from "./ProjectWhereUniqueInput";
 import { ProjectFindManyArgs } from "./ProjectFindManyArgs";
 import { ProjectUpdateInput } from "./ProjectUpdateInput";
 import { Project } from "./Project";
+import { BillFindManyArgs } from "../../bill/base/BillFindManyArgs";
+import { Bill } from "../../bill/base/Bill";
+import { BillWhereUniqueInput } from "../../bill/base/BillWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -60,7 +63,6 @@ export class ProjectControllerBase {
         clientName: true,
         completionDate: true,
         createdAt: true,
-        electricityBillDetails: true,
         greenMeterInstalled: true,
         id: true,
         installationTeamContactNumber: true,
@@ -113,7 +115,6 @@ export class ProjectControllerBase {
         clientName: true,
         completionDate: true,
         createdAt: true,
-        electricityBillDetails: true,
         greenMeterInstalled: true,
         id: true,
         installationTeamContactNumber: true,
@@ -167,7 +168,6 @@ export class ProjectControllerBase {
         clientName: true,
         completionDate: true,
         createdAt: true,
-        electricityBillDetails: true,
         greenMeterInstalled: true,
         id: true,
         installationTeamContactNumber: true,
@@ -230,7 +230,6 @@ export class ProjectControllerBase {
           clientName: true,
           completionDate: true,
           createdAt: true,
-          electricityBillDetails: true,
           greenMeterInstalled: true,
           id: true,
           installationTeamContactNumber: true,
@@ -292,7 +291,6 @@ export class ProjectControllerBase {
           clientName: true,
           completionDate: true,
           createdAt: true,
-          electricityBillDetails: true,
           greenMeterInstalled: true,
           id: true,
           installationTeamContactNumber: true,
@@ -324,5 +322,113 @@ export class ProjectControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/bills")
+  @ApiNestedQuery(BillFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Bill",
+    action: "read",
+    possession: "any",
+  })
+  async findManyBills(
+    @common.Req() request: Request,
+    @common.Param() params: ProjectWhereUniqueInput
+  ): Promise<Bill[]> {
+    const query = plainToClass(BillFindManyArgs, request.query);
+    const results = await this.service.findBills(params.id, {
+      ...query,
+      select: {
+        amount: true,
+        createdAt: true,
+        exportBill: true,
+        id: true,
+        importBill: true,
+        month: true,
+        produce: true,
+
+        project: {
+          select: {
+            id: true,
+          },
+        },
+
+        referenceNumber: true,
+        updatedAt: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/bills")
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "update",
+    possession: "any",
+  })
+  async connectBills(
+    @common.Param() params: ProjectWhereUniqueInput,
+    @common.Body() body: BillWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      bills: {
+        connect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/bills")
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "update",
+    possession: "any",
+  })
+  async updateBills(
+    @common.Param() params: ProjectWhereUniqueInput,
+    @common.Body() body: BillWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      bills: {
+        set: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/bills")
+  @nestAccessControl.UseRoles({
+    resource: "Project",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectBills(
+    @common.Param() params: ProjectWhereUniqueInput,
+    @common.Body() body: BillWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      bills: {
+        disconnect: body,
+      },
+    };
+    await this.service.update({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

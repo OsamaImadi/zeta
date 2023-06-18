@@ -11,7 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsBoolean, IsOptional, IsString, IsDate } from "class-validator";
+import {
+  IsBoolean,
+  IsOptional,
+  IsString,
+  ValidateNested,
+  IsDate,
+} from "class-validator";
+import { BillUpdateManyWithoutProjectsInput } from "./BillUpdateManyWithoutProjectsInput";
 import { Type } from "class-transformer";
 import { IsJSONValue } from "@app/custom-validators";
 import { GraphQLJSON } from "graphql-type-json";
@@ -62,6 +69,18 @@ class ProjectUpdateInput {
     nullable: true,
   })
   appUsername?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => BillUpdateManyWithoutProjectsInput,
+  })
+  @ValidateNested()
+  @Type(() => BillUpdateManyWithoutProjectsInput)
+  @IsOptional()
+  @Field(() => BillUpdateManyWithoutProjectsInput, {
+    nullable: true,
+  })
+  bills?: BillUpdateManyWithoutProjectsInput;
 
   @ApiProperty({
     required: false,
@@ -117,16 +136,6 @@ class ProjectUpdateInput {
     nullable: true,
   })
   completionDate?: Date | null;
-
-  @ApiProperty({
-    required: false,
-  })
-  @IsJSONValue()
-  @IsOptional()
-  @Field(() => GraphQLJSON, {
-    nullable: true,
-  })
-  electricityBillDetails?: InputJsonValue;
 
   @ApiProperty({
     required: false,

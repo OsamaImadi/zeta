@@ -13,6 +13,10 @@ import { ProjectList } from "./project/ProjectList";
 import { ProjectCreate } from "./project/ProjectCreate";
 import { ProjectEdit } from "./project/ProjectEdit";
 import { ProjectShow } from "./project/ProjectShow";
+import { BillList } from "./bill/BillList";
+import { BillCreate } from "./bill/BillCreate";
+import { BillEdit } from "./bill/BillEdit";
+import { BillShow } from "./bill/BillShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -52,6 +56,13 @@ const App = (): React.ReactElement => {
           edit={ProjectEdit}
           create={ProjectCreate}
           show={ProjectShow}
+        />
+        <Resource
+          name="Bill"
+          list={BillList}
+          edit={BillEdit}
+          create={BillCreate}
+          show={BillShow}
         />
       </Admin>
     </div>

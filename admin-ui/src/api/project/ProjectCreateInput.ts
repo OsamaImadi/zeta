@@ -1,3 +1,4 @@
+import { BillCreateNestedManyWithoutProjectsInput } from "./BillCreateNestedManyWithoutProjectsInput";
 import { InputJsonValue } from "../../types";
 
 export type ProjectCreateInput = {
@@ -5,12 +6,12 @@ export type ProjectCreateInput = {
   appName?: string | null;
   appPassword?: string | null;
   appUsername?: string | null;
+  bills?: BillCreateNestedManyWithoutProjectsInput;
   clientAddress?: string | null;
   clientCnic?: string | null;
   clientContactNumber?: string | null;
   clientName?: string | null;
   completionDate?: Date | null;
-  electricityBillDetails?: InputJsonValue;
   greenMeterInstalled?: boolean | null;
   installationTeamContactNumber?: string | null;
   installationTeamName?: string | null;

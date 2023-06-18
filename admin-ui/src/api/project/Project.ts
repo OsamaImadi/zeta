@@ -1,3 +1,4 @@
+import { Bill } from "../bill/Bill";
 import { JsonValue } from "type-fest";
 
 export type Project = {
@@ -5,13 +6,13 @@ export type Project = {
   appName: string | null;
   appPassword: string | null;
   appUsername: string | null;
+  bills?: Array<Bill>;
   clientAddress: string | null;
   clientCnic: string | null;
   clientContactNumber: string | null;
   clientName: string | null;
   completionDate: Date | null;
   createdAt: Date;
-  electricityBillDetails: JsonValue;
   greenMeterInstalled: boolean | null;
   id: string;
   installationTeamContactNumber: string | null;
