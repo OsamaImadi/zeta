@@ -1,0 +1,54 @@
+datasource postgres {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  createdAt DateTime @default(now())
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model Project {
+  appInstalled                    Boolean?
+  appName                         String?
+  appPassword                     String?
+  appUsername                     String?
+  clientAddress                   String?
+  clientCnic                      String?
+  clientContactNumber             String?
+  clientName                      String?
+  completionDate                  DateTime?
+  createdAt                       DateTime  @default(now())
+  electricityBillDetails          Json?
+  greenMeterInstalled             Boolean?
+  id                              String    @id @default(cuid())
+  installationTeamContactNumber   String?
+  installationTeamName            String?
+  inverterCapacity                String?
+  inverterCompany                 String?
+  inverterSerialNumber            String?
+  inverterSupplierDetails         String?
+  invoiceOfPanelPurchase          String?
+  netMeteringLicense              String?
+  netMeteringLicenseCopyAvailable Boolean?
+  numberOfPanels                  String?
+  panelsCompany                   String?
+  profit                          String?
+  projectSize                     String?
+  serialNumberOfPanles            Json?
+  startDate                       DateTime?
+  structureType                   String?
+  totalQuotationAgreed            String?
+  updatedAt                       DateTime  @updatedAt
+  wifiDongleSerialNumber          String?
+}

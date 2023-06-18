@@ -1,0 +1,38 @@
+import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
+import { StringNullableFilter } from "../../util/StringNullableFilter";
+import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
+import { JsonFilter } from "../../util/JsonFilter";
+import { StringFilter } from "../../util/StringFilter";
+
+export type ProjectWhereInput = {
+  appInstalled?: BooleanNullableFilter;
+  appName?: StringNullableFilter;
+  appPassword?: StringNullableFilter;
+  appUsername?: StringNullableFilter;
+  clientAddress?: StringNullableFilter;
+  clientCnic?: StringNullableFilter;
+  clientContactNumber?: StringNullableFilter;
+  clientName?: StringNullableFilter;
+  completionDate?: DateTimeNullableFilter;
+  electricityBillDetails?: JsonFilter;
+  greenMeterInstalled?: BooleanNullableFilter;
+  id?: StringFilter;
+  installationTeamContactNumber?: StringNullableFilter;
+  installationTeamName?: StringNullableFilter;
+  inverterCapacity?: StringNullableFilter;
+  inverterCompany?: StringNullableFilter;
+  inverterSerialNumber?: StringNullableFilter;
+  inverterSupplierDetails?: StringNullableFilter;
+  invoiceOfPanelPurchase?: StringNullableFilter;
+  netMeteringLicense?: StringNullableFilter;
+  netMeteringLicenseCopyAvailable?: BooleanNullableFilter;
+  numberOfPanels?: StringNullableFilter;
+  panelsCompany?: StringNullableFilter;
+  profit?: StringNullableFilter;
+  projectSize?: StringNullableFilter;
+  serialNumberOfPanles?: JsonFilter;
+  startDate?: DateTimeNullableFilter;
+  structureType?: StringNullableFilter;
+  totalQuotationAgreed?: StringNullableFilter;
+  wifiDongleSerialNumber?: StringNullableFilter;
+};
